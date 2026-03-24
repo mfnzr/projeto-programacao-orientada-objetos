@@ -1,0 +1,15 @@
+import { CharacterClass } from "../enums/CharacterClass";
+import { Character } from "./Character";
+
+export class Mage extends Character {
+
+  constructor(name: string, level: number, health: number) {
+    super(name, level, health, CharacterClass.MAGE); //chama o construtor da classe pai
+  }
+
+  //aqui estou sobrescrevendo o método attack da classe Character, ou seja,
+  //estou implementando a lógica específica para o ataque do Mago
+  attack(): number {
+    return 20 + this.level;
+  }
+}

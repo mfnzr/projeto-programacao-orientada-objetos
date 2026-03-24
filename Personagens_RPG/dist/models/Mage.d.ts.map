@@ -1,0 +1,1 @@
+{"version":3,"file":"Mage.d.ts","sourceRoot":"","sources":["../../src/models/Mage.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,SAAS,EAAE,MAAM,aAAa,CAAC;AAExC,qBAAa,IAAK,SAAQ,SAAS;gBAErB,IAAI,EAAE,MAAM,EAAE,KAAK,EAAE,MAAM,EAAE,MAAM,EAAE,MAAM;IAMvD,MAAM,IAAI,MAAM;CAGjB"}
