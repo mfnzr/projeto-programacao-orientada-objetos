@@ -3,8 +3,8 @@ import { Character } from "./Character";
 
 export class Mage extends Character {
 
-  constructor(name: string, level: number, health: number) {
-    super(name, level, health, CharacterClass.MAGE); //chama o construtor da classe pai
+  constructor(name: string) {
+    super(name); //chama o construtor da classe pai
   }
 
   //aqui estou sobrescrevendo o método attack da classe Character, ou seja,

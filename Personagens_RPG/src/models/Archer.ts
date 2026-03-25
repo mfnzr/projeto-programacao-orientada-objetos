@@ -3,8 +3,8 @@ import { Character } from "./Character";
 
 export class Archer extends Character {
 
-  constructor(name: string, level: number, health: number) {
-    super(name, level, health, CharacterClass.ARCHER);
+  constructor(name: string) {
+    super(name);
   }
 
   //aqui estou sobrescrevendo o método attack da classe Character, ou seja,

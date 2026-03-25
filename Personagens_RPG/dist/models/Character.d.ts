@@ -1,10 +1,14 @@
-import { CharacterClass } from "../enums/CharacterClass";
 export declare abstract class Character {
-    name: string;
-    level: number;
-    health: number;
-    characterClass: CharacterClass;
-    constructor(name: string, level: number, health: number, characterClass: CharacterClass);
+    _name: string;
+    _level: number;
+    _health: number;
+    constructor(name: string);
+    get name(): string;
+    set name(value: string);
+    get level(): number;
+    set level(value: number);
+    get health(): number;
+    set health(value: number);
     abstract attack(): void;
     takeDamage(damage: number): number;
 }

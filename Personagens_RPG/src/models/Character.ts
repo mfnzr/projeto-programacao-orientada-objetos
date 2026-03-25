@@ -1,17 +1,43 @@
-import { CharacterClass } from "../enums/CharacterClass";
-
 export abstract class Character {
-  public name: string;
-  public level: number;
-  public health: number;
-  //aqui o tipo de characterClass só pode ser um dos valores do enum.
-  public characterClass: CharacterClass;
+  public _name!: string; //get set
+  public _level: number;
+  public _health: number;
 
-  constructor(name: string, level: number, health: number, characterClass: CharacterClass) {
-    this.name = name;
-    this.level = level;
-    this.health = health;
-    this.characterClass = characterClass;
+  constructor(name: string) {
+    this._name = name;
+    this._level = 1;
+    this._health = 100;
+  }
+
+  get name(): string {
+    return this._name;
+  }
+
+  set name(value: string) {
+    if (value.trim() !== "") {  
+      this._name = value;
+    }
+    throw new Error("Name cannot be empty");
+  }
+
+  get level(): number {
+    return this._level;
+  }
+
+  set level(value: number) {
+    if (value > 0) {
+      this._level = value;
+    }
+    throw new Error("Level must be greater than 0");
+  }
+
+  get health(): number {
+    return this._health;
+  }
+
+  set health(value: number) {
+    if (value < 0) this._health = 0; // não deixa vida negativa
+    else this._health = value;
   }
 
   //metodo abstrato, ou seja, sem implementação, apenas a assinatura
