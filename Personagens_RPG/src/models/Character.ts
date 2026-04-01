@@ -14,10 +14,11 @@ export abstract class Character {
   }
 
   set name(value: string) {
-    if (value.trim() !== "") {  
+    if (value.trim() !== "") {
       this._name = value;
+    } else {
+      throw new Error("Name cannot be empty");
     }
-    throw new Error("Name cannot be empty");
   }
 
   get level(): number {
@@ -27,8 +28,9 @@ export abstract class Character {
   set level(value: number) {
     if (value > 0) {
       this._level = value;
+    } else {
+      throw new Error("Level must be greater than 0");
     }
-    throw new Error("Level must be greater than 0");
   }
 
   get health(): number {
