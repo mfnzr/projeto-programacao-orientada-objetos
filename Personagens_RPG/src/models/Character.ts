@@ -1,12 +1,16 @@
+import { CharacterClass } from "../enums/CharacterClass";
+
 export abstract class Character {
   public _name!: string; //get set
   public _level: number;
   public _health: number;
+  public _class: CharacterClass
 
-  constructor(name: string) {
+  constructor(name: string, characterClass: CharacterClass) {
     this._name = name;
     this._level = 1;
     this._health = 100;
+    this._class = characterClass;
   }
 
   get name(): string {
@@ -40,6 +44,10 @@ export abstract class Character {
   set health(value: number) {
     if (value < 0) this._health = 0; // não deixa vida negativa
     else this._health = value;
+  }
+
+  get class(): CharacterClass {
+    return this._class;
   }
 
   //metodo abstrato, ou seja, sem implementação, apenas a assinatura

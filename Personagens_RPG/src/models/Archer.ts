@@ -4,7 +4,7 @@ import { Character } from "./Character";
 export class Archer extends Character {
 
   constructor(name: string) {
-    super(name);
+    super(name, CharacterClass.ARCHER);
   }
 
   //aqui estou sobrescrevendo o método attack da classe Character, ou seja,

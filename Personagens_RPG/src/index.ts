@@ -1,6 +1,8 @@
 import { CharacterController } from "./controllers/CharacterController";
+import { CharacterService } from "./controllers/Service";
 
-const controller = new CharacterController();
+const service = new CharacterService();
+const controller = new CharacterController(service);
 
 controller.createAndShowWarrior("Aragorn");
 controller.createAndShowArcher("Legolas");

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CharacterController = void 0;
-const Service_1 = require("./Service");
 class CharacterController {
-    constructor() {
-        this.service = new Service_1.CharacterService();
+    //injeção de dependência - o service é injetado no controller, permitindo maior flexibilidade
+    constructor(service) {
+        this.service = service;
     }
     createAndShowWarrior(name) {
         const warrior = this.service.createWarrior(name);

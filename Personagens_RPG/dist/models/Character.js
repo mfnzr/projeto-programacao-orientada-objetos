@@ -2,10 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Character = void 0;
 class Character {
-    constructor(name) {
+    constructor(name, characterClass) {
         this._name = name;
         this._level = 1;
         this._health = 100;
+        this._class = characterClass;
     }
     get name() {
         return this._name;
@@ -14,7 +15,9 @@ class Character {
         if (value.trim() !== "") {
             this._name = value;
         }
-        throw new Error("Name cannot be empty");
+        else {
+            throw new Error("Name cannot be empty");
+        }
     }
     get level() {
         return this._level;
@@ -23,7 +26,9 @@ class Character {
         if (value > 0) {
             this._level = value;
         }
-        throw new Error("Level must be greater than 0");
+        else {
+            throw new Error("Level must be greater than 0");
+        }
     }
     get health() {
         return this._health;
@@ -33,6 +38,9 @@ class Character {
             this._health = 0; // não deixa vida negativa
         else
             this._health = value;
+    }
+    get class() {
+        return this._class;
     }
     takeDamage(damage) {
         this.health -= damage;

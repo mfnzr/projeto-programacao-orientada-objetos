@@ -7,8 +7,9 @@ export class CharacterController {
   //o controller depende do service para criar personagens e realizar ações, seguindo o princípio de separação de responsabilidades
   private service: CharacterService;
 
-  constructor() {
-    this.service = new CharacterService();
+  //injeção de dependência - o service é injetado no controller, permitindo maior flexibilidade
+  constructor(service: CharacterService) {
+    this.service = service;
   }
 
   createAndShowWarrior(name: string): Warrior {
