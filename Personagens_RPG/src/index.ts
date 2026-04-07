@@ -1,9 +1,10 @@
-import { CharacterController } from "./controllers/CharacterController";
 import { CharacterService } from "./controllers/Service";
+import { CharacterController } from "./controllers/CharacterController";
+import { CharacterView } from "./views/CharacterView";
 
 const service = new CharacterService();
 const controller = new CharacterController(service);
+const view = new CharacterView();
 
-controller.createAndShowWarrior("Aragorn");
-controller.createAndShowArcher("Legolas");
-controller.createAndShowMage("Gandalf");
+view.setController(controller);
+view.start();

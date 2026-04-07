@@ -1,12 +1,9 @@
-import { Archer } from "../models/Archer";
-import { Mage } from "../models/Mage";
-import { Warrior } from "../models/Warrior";
+import { CharacterClass } from "../enums/CharacterClass";
+import { Character } from "../models/Character";
 import { CharacterService } from "./Service";
 export declare class CharacterController {
     private service;
     constructor(service: CharacterService);
-    createAndShowWarrior(name: string): Warrior;
-    createAndShowArcher(name: string): Archer;
-    createAndShowMage(name: string): Mage;
+    createAndShowCharacter(name: string, characterClass: CharacterClass): Character;
 }
 //# sourceMappingURL=CharacterController.d.ts.map

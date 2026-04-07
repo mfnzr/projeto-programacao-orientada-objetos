@@ -1,22 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CharacterController = void 0;
+const CharacterClass_1 = require("../enums/CharacterClass");
 class CharacterController {
     //injeção de dependência - o service é injetado no controller, permitindo maior flexibilidade
     constructor(service) {
         this.service = service;
     }
-    createAndShowWarrior(name) {
-        const warrior = this.service.createWarrior(name);
-        return warrior;
-    }
-    createAndShowArcher(name) {
-        const archer = this.service.createArcher(name);
-        return archer;
-    }
-    createAndShowMage(name) {
-        const mage = this.service.createMage(name);
-        return mage;
+    //importa o método createAndShowCharacter para criar um personagem com base na classe escolhida e mostrar suas informações
+    //a classe é definida como um enum, o que facilita a escolha e evita erros de digitação
+    //o método createAndShowCharacter é genérico, ou seja, pode criar qualquer tipo de personagem com base na classe escolhida, utilizando o polimorfismo para chamar o método attack específico de cada classe
+    createAndShowCharacter(name, characterClass) {
+        switch (characterClass) {
+            case CharacterClass_1.CharacterClass.WARRIOR:
+                //aqui estou utilizando o service para criar um personagem do tipo Guerreiro, seguindo o princípio de inversão de dependência, onde o controller depende de uma abstração (service) e não de uma implementação concreta (Warrior)
+                return this.service.createWarrior(name);
+            case CharacterClass_1.CharacterClass.ARCHER:
+                return this.service.createArcher(name);
+            case CharacterClass_1.CharacterClass.MAGE:
+                return this.service.createMage(name);
+        }
     }
 }
 exports.CharacterController = CharacterController;

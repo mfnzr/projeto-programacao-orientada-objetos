@@ -1,6 +1,5 @@
-import { Archer } from "../models/Archer";
-import { Mage } from "../models/Mage";
-import { Warrior } from "../models/Warrior";
+import { CharacterClass } from "../enums/CharacterClass";
+import { Character } from "../models/Character";
 import { CharacterService } from "./Service";
 
 export class CharacterController {
@@ -12,18 +11,18 @@ export class CharacterController {
     this.service = service;
   }
 
-  createAndShowWarrior(name: string): Warrior {
-    const warrior = this.service.createWarrior(name);
-    return warrior;
-  }
-
-  createAndShowArcher(name: string): Archer { 
-    const archer = this.service.createArcher(name);
-    return archer;
-  }
-
-  createAndShowMage(name: string): Mage {
-    const mage = this.service.createMage(name);
-    return mage;
+  //importa o método createAndShowCharacter para criar um personagem com base na classe escolhida e mostrar suas informações
+  //a classe é definida como um enum, o que facilita a escolha e evita erros de digitação
+  //o método createAndShowCharacter é genérico, ou seja, pode criar qualquer tipo de personagem com base na classe escolhida, utilizando o polimorfismo para chamar o método attack específico de cada classe
+  createAndShowCharacter(name: string, characterClass: CharacterClass): Character {
+    switch (characterClass) {
+      case CharacterClass.WARRIOR:
+      //aqui estou utilizando o service para criar um personagem do tipo Guerreiro
+        return this.service.createWarrior(name);
+      case CharacterClass.ARCHER:
+        return this.service.createArcher(name);
+      case CharacterClass.MAGE:
+        return this.service.createMage(name);
+    }
   }
 }

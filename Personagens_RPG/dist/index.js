@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const CharacterController_1 = require("./controllers/CharacterController");
 const Service_1 = require("./controllers/Service");
+const CharacterController_1 = require("./controllers/CharacterController");
+const CharacterView_1 = require("./views/CharacterView");
 const service = new Service_1.CharacterService();
 const controller = new CharacterController_1.CharacterController(service);
-controller.createAndShowWarrior("Aragorn");
-controller.createAndShowArcher("Legolas");
-controller.createAndShowMage("Gandalf");
+const view = new CharacterView_1.CharacterView();
+view.setController(controller);
+view.start();
 //# sourceMappingURL=index.js.map
