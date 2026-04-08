@@ -13,7 +13,7 @@ class CharacterController {
     createAndShowCharacter(name, characterClass) {
         switch (characterClass) {
             case CharacterClass_1.CharacterClass.WARRIOR:
-                //aqui estou utilizando o service para criar um personagem do tipo Guerreiro, seguindo o princípio de inversão de dependência, onde o controller depende de uma abstração (service) e não de uma implementação concreta (Warrior)
+                //aqui estou utilizando o service para criar um personagem do tipo Guerreiro
                 return this.service.createWarrior(name);
             case CharacterClass_1.CharacterClass.ARCHER:
                 return this.service.createArcher(name);

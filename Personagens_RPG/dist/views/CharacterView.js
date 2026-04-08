@@ -38,7 +38,6 @@ class CharacterView {
         const character = this.controller.createAndShowCharacter(name, className);
         this.showCharacterInfo(character); // chama com this.
     }
-    // método no nível da classe, não dentro do start()
     showCharacterInfo(character) {
         console.log(`
       === Personagem Criado! ===

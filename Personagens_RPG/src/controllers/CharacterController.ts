@@ -3,7 +3,7 @@ import { Character } from "../models/Character";
 import { CharacterService } from "./Service";
 
 export class CharacterController {
-  //o controller depende do service para criar personagens e realizar ações, seguindo o princípio de separação de responsabilidades
+  //o controller depende do service para criar personagens e realizar ações
   private service: CharacterService;
 
   //injeção de dependência - o service é injetado no controller, permitindo maior flexibilidade

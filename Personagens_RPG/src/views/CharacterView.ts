@@ -13,7 +13,6 @@ export class CharacterView {
 
   start(): void {
     console.log("=== Criação de Personagem ===\n");
-
     console.log("Escolha a classe:");
     console.log("1 - Warrior");
     console.log("2 - Archer");
@@ -30,14 +29,14 @@ export class CharacterView {
     const className = classMap[classChoice];
 
     if (!className) {
-      console.log("Opção inválida!");
+      console.log("Opção inválida");
       return;
     }
 
     const name = this.prompt("Digite o nome do personagem: ");
 
     if (!name || name.trim() === "") {
-      console.log("Nome não pode ser vazio!");
+      console.log("Nome não pode ser vazio");
       return;
     }
 
@@ -47,7 +46,7 @@ export class CharacterView {
 
   showCharacterInfo(character: Character): void {
     console.log(`
-      === Personagem Criado! ===
+      === Personagem Criado ===
       Nome:   ${character.name}
       Classe: ${character.class}
       Level:  ${character.level}

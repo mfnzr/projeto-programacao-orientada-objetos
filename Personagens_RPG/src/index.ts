@@ -6,5 +6,7 @@ const service = new CharacterService();
 const controller = new CharacterController(service);
 const view = new CharacterView();
 
+//injeto o controller na view
 view.setController(controller);
+//inicio o prompt
 view.start();
