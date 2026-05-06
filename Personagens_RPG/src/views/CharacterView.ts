@@ -3,6 +3,8 @@ import { CharacterController } from "../controllers/CharacterController";
 import { CharacterClass } from "../enums/CharacterClass";
 import { Character } from "../models/Character";
 
+//INTERAÇÕES COM O USUÁRIO - COLETA DADOS E EXIBE INFORMAÇÕES
+
 export class CharacterView {
   private prompt = promptSync();
   private controller!: CharacterController;
@@ -11,14 +13,9 @@ export class CharacterView {
     this.controller = controller;
   }
 
-  start(): void {
-    console.log("=== Criação de Personagem ===\n");
-    console.log("Escolha a classe:");
-    console.log("1 - Warrior");
-    console.log("2 - Archer");
-    console.log("3 - Mage\n");
-
-    const classChoice = this.prompt("Digite o número da classe desejada: ");
+  askCharacterData(number: number): { name: string; characterClass: CharacterClass } {
+    console.log(`\n=== Personagem nº ${number} ===\n`);
+    console.log("1 - Warrior / 2 - Archer / 3 - Mage\n");
 
     const classMap: Record<string, CharacterClass> = {
       "1": CharacterClass.WARRIOR,
@@ -26,32 +23,36 @@ export class CharacterView {
       "3": CharacterClass.MAGE,
     };
 
-    const className = classMap[classChoice];
+    const classChoice = this.prompt("Classe: ");
+    const characterClass = classMap[classChoice];
 
-    if (!className) {
-      console.log("Opção inválida");
-      return;
-    }
+    if (!characterClass) throw new Error("Opção inválida!");
 
-    const name = this.prompt("Digite o nome do personagem: ");
+    const name = this.prompt("Nome: ");
+    if (!name || name.trim() === "") throw new Error("Nome não pode ser vazio!");
 
-    if (!name || name.trim() === "") {
-      console.log("Nome não pode ser vazio");
-      return;
-    }
+    return { name, characterClass }; //retorna os dados
+  }
 
-    const character = this.controller.createAndShowCharacter(name, className);
-    this.showCharacterInfo(character); // chama com this.
+  askContinue(): boolean {
+    const answer = this.prompt("Criar outro personagem? (s/n): ");
+    return answer.toLowerCase() === "s";
+  }
+
+  showAllCharacters(characters: Character[]): void {
+    console.log("\n=== Personagens Criados ===\n");
+    characters.forEach((character, index) => {
+      console.log(`--- Personagem ${index + 1} ---`);
+      this.showCharacterInfo(character);
+    });
   }
 
   showCharacterInfo(character: Character): void {
     console.log(`
-      === Personagem Criado ===
       Nome:   ${character.name}
       Classe: ${character.class}
       Level:  ${character.level}
       Saúde:  ${character.health}
-      Ataque: ${character.attack()}
     `);
   }
 }

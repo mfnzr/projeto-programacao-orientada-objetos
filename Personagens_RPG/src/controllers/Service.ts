@@ -3,18 +3,32 @@ import { Warrior } from "../models/Warrior";
 import { Archer } from "../models/Archer";
 import { Mage } from "../models/Mage";
 
+
+//REGRAS DE NEGOCIO - CRIA OS PERSONAGENS E REALIZA AÇÕES COMO ATAQUE E TOMAR DANO
+
 export class CharacterService {
+ private characters: Character[] = []; //armazena os personagens criados
 
   createWarrior(name: string): Warrior {
-    return new Warrior(name);
+    const warrior = new Warrior(name);
+    this.characters.push(warrior); //salva automaticamente na lista
+    return warrior;
   }
 
   createArcher(name: string): Archer {
-    return new Archer(name);
+    const archer = new Archer(name);
+    this.characters.push(archer);
+    return archer;
   }
 
   createMage(name: string): Mage {
-    return new Mage(name);
+    const mage = new Mage(name);
+    this.characters.push(mage);
+    return mage;
+  }
+
+  getAllCharacters(): Character[] {
+    return this.characters;
   }
 
   attack(character: Character): void {

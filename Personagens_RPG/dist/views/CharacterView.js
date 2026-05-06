@@ -13,39 +13,41 @@ class CharacterView {
     setController(controller) {
         this.controller = controller;
     }
-    start() {
-        console.log("=== Criação de Personagem ===\n");
-        console.log("Escolha a classe:");
-        console.log("1 - Warrior");
-        console.log("2 - Archer");
-        console.log("3 - Mage\n");
-        const classChoice = this.prompt("Digite o número da classe desejada: ");
+    // só coleta os dados, não cria nada
+    askCharacterData(number) {
+        console.log(`\n=== Personagem nº ${number} ===\n`);
+        console.log("1 - Warrior / 2 - Archer / 3 - Mage\n");
         const classMap = {
             "1": CharacterClass_1.CharacterClass.WARRIOR,
             "2": CharacterClass_1.CharacterClass.ARCHER,
             "3": CharacterClass_1.CharacterClass.MAGE,
         };
-        const className = classMap[classChoice];
-        if (!className) {
-            console.log("Opção inválida!");
-            return;
-        }
-        const name = this.prompt("Digite o nome do personagem: ");
-        if (!name || name.trim() === "") {
-            console.log("Nome não pode ser vazio!");
-            return;
-        }
-        const character = this.controller.createAndShowCharacter(name, className);
-        this.showCharacterInfo(character); // chama com this.
+        const classChoice = this.prompt("Classe: ");
+        const characterClass = classMap[classChoice];
+        if (!characterClass)
+            throw new Error("Opção inválida!");
+        const name = this.prompt("Nome: ");
+        if (!name || name.trim() === "")
+            throw new Error("Nome não pode ser vazio!");
+        return { name, characterClass }; // só retorna os dados
+    }
+    askContinue() {
+        const answer = this.prompt("Criar outro personagem? (s/n): ");
+        return answer.toLowerCase() === "s";
+    }
+    showAllCharacters(characters) {
+        console.log("\n=== Personagens Criados ===\n");
+        characters.forEach((character, index) => {
+            console.log(`--- Personagem ${index + 1} ---`);
+            this.showCharacterInfo(character);
+        });
     }
     showCharacterInfo(character) {
         console.log(`
-      === Personagem Criado! ===
       Nome:   ${character.name}
       Classe: ${character.class}
       Level:  ${character.level}
       Saúde:  ${character.health}
-      Ataque: ${character.attack()}
     `);
     }
 }

@@ -7,6 +7,25 @@ class CharacterController {
     constructor(service) {
         this.service = service;
     }
+    setView(view) {
+        this.view = view;
+    }
+    startCreation() {
+        let creating = true;
+        let count = 1;
+        while (creating) {
+            const { name, characterClass } = this.view.askCharacterData(count);
+            this.createAndShowCharacter(name, characterClass);
+            count++;
+            if (count > 2) { // mínimo 2 personagens antes de perguntar
+                const continuar = this.view.askContinue();
+                if (!continuar)
+                    creating = false;
+            }
+        }
+        const all = this.service.getAllCharacters();
+        this.view.showAllCharacters(all);
+    }
     //importa o método createAndShowCharacter para criar um personagem com base na classe escolhida e mostrar suas informações
     //a classe é definida como um enum, o que facilita a escolha e evita erros de digitação
     //o método createAndShowCharacter é genérico, ou seja, pode criar qualquer tipo de personagem com base na classe escolhida, utilizando o polimorfismo para chamar o método attack específico de cada classe
