@@ -52,4 +52,30 @@ export class CharacterController {
         return this.service.createMage(name);
     }
   }
+
+  attack(attackerIndex: number, defenderIndex: number): { attacker: Character, defender: Character, damage: number } {
+    const characters = this.service.getAllCharacters();
+    const attacker = characters[attackerIndex];
+    const defender = characters[defenderIndex];
+
+    if (!attacker || !defender) {
+      throw new Error("Personagem não encontrado!");
+    }
+    
+    const damage = this.service.attackCharacter(attacker, defender);
+    return { attacker, defender, damage };
+  }
+
+  startBattle(): void {
+    const characters = this.service.getAllCharacters();
+    const { attackerIndex, defenderIndex } = this.view.askBattle(characters);
+
+    if (attackerIndex === defenderIndex) {
+      console.log("Um personagem não pode atacar a si mesmo!");
+      return;
+    }
+
+    const { attacker, defender, damage } = this.attack(attackerIndex, defenderIndex);
+    this.view.showAttackResult(attacker, defender, damage);
+  }
 }

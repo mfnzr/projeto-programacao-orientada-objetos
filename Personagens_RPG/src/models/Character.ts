@@ -52,7 +52,7 @@ export abstract class Character {
 
   //metodo abstrato, ou seja, sem implementação, apenas a assinatura
   //aqui é onde vou utilizar o polimorfismo, ou seja, utilizar o mesmo método para diferentes tipos de personagens, cada um com sua própria implementação
-  public abstract attack(): void;
+  public abstract attack(): number;
 
   takeDamage(damage: number): number {
     this.health -= damage;

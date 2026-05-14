@@ -35,6 +35,12 @@ export class CharacterService {
     character.attack();
   }
 
+  attackCharacter(attacker: Character, defender: Character): number {
+    const damage = attacker.attack(); // pega o dano do atacante
+    defender.takeDamage(damage);      // aplica no defensor
+    return damage;                    // retorna pra view exibir
+  }
+
   takeDamage(character: Character, damage: number): number {
     return character.takeDamage(damage);
   }

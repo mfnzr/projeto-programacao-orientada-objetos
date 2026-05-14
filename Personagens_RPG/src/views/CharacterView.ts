@@ -55,4 +55,27 @@ export class CharacterView {
       Saúde:  ${character.health}
     `);
   }
+
+  askBattle(characters: Character[]): { attackerIndex: number, defenderIndex: number } {
+    console.log("\n=== Batalha! ===\n");
+
+    console.log("Escolha o atacante:");
+    characters.forEach((c, i) => console.log(`${i + 1} - ${c.name} (${c.class})`));
+    const attackerIndex = parseInt(this.prompt("Atacante: ")) - 1;
+
+    console.log("\nEscolha o defensor:");
+    characters.forEach((c, i) => console.log(`${i + 1} - ${c.name} (${c.class})`));
+    const defenderIndex = parseInt(this.prompt("Defensor: ")) - 1;
+
+    return { attackerIndex, defenderIndex };
+  }
+
+  showAttackResult(attacker: Character, defender: Character, damage: number): void {
+    console.log(`
+    ${attacker.name} atacou ${defender.name}!
+    Dano causado: ${damage}
+    Saúde de ${defender.name}: ${defender.health}
+    ${defender.health <= 0 ? `${defender.name} foi derrotado!` : ""}
+    `);
+  }
 }
