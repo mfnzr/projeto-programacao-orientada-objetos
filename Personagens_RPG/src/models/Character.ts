@@ -54,8 +54,13 @@ export abstract class Character {
   //aqui é onde vou utilizar o polimorfismo, ou seja, utilizar o mesmo método para diferentes tipos de personagens, cada um com sua própria implementação
   public abstract attack(): number;
 
-  takeDamage(damage: number): number {
-    this.health -= damage;
-    return damage;
+  //assinaturas da sobrecarga
+  takeDamage(damage: number): number;
+  takeDamage(damage: number, multiplier: number): number;
+
+  takeDamage(damage: number, multiplier: number = 1): number {
+    const total = damage * multiplier;
+    this.health -= total;
+    return total;
   }
 }

@@ -56,7 +56,7 @@ export class CharacterView {
     `);
   }
 
-  askBattle(characters: Character[]): { attackerIndex: number, defenderIndex: number } {
+  askBattle(characters: Character[]): { attackerIndex: number, defenderIndex: number, critical: boolean } {
     console.log("\n=== Batalha! ===\n");
 
     console.log("Escolha o atacante:");
@@ -67,11 +67,15 @@ export class CharacterView {
     characters.forEach((c, i) => console.log(`${i + 1} - ${c.name} (${c.class})`));
     const defenderIndex = parseInt(this.prompt("Defensor: ")) - 1;
 
-    return { attackerIndex, defenderIndex };
+    const criticalAnswer = this.prompt("Ataque crítico? (s/n): ");
+    const critical = criticalAnswer.toLowerCase() === "s";
+
+    return { attackerIndex, defenderIndex, critical };
   }
 
-  showAttackResult(attacker: Character, defender: Character, damage: number): void {
+  showAttackResult(attacker: Character, defender: Character, damage: number, critical: boolean): void {
     console.log(`
+    ${critical ? "ATAQUE CRÍTICO!" : ""}
     ${attacker.name} atacou ${defender.name}!
     Dano causado: ${damage}
     Saúde de ${defender.name}: ${defender.health}
