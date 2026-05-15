@@ -9,5 +9,11 @@ export declare class CharacterController {
     setView(view: CharacterView): void;
     startCreation(): void;
     createAndShowCharacter(name: string, characterClass: CharacterClass): Character;
+    attack(attackerIndex: number, defenderIndex: number, critical: boolean): {
+        attacker: Character;
+        defender: Character;
+        damage: number;
+    };
+    startBattle(): void;
 }
 //# sourceMappingURL=CharacterController.d.ts.map

@@ -42,9 +42,10 @@ class Character {
     get class() {
         return this._class;
     }
-    takeDamage(damage) {
-        this.health -= damage;
-        return damage;
+    takeDamage(damage, multiplier = 1) {
+        const total = damage * multiplier;
+        this.health -= total;
+        return total;
     }
 }
 exports.Character = Character;

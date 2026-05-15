@@ -10,5 +10,4 @@ view.setController(controller);
 controller.setView(view);
 
 controller.startCreation(); // controller coordena tudo
-controller.startCreation();
 controller.startBattle();

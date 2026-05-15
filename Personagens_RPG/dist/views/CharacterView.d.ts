@@ -12,5 +12,11 @@ export declare class CharacterView {
     askContinue(): boolean;
     showAllCharacters(characters: Character[]): void;
     showCharacterInfo(character: Character): void;
+    askBattle(characters: Character[]): {
+        attackerIndex: number;
+        defenderIndex: number;
+        critical: boolean;
+    };
+    showAttackResult(attacker: Character, defender: Character, damage: number, critical: boolean): void;
 }
 //# sourceMappingURL=CharacterView.d.ts.map

@@ -9,6 +9,7 @@ export declare class CharacterService {
     createMage(name: string): Mage;
     getAllCharacters(): Character[];
     attack(character: Character): void;
+    attackCharacter(attacker: Character, defender: Character, critical: boolean): number;
     takeDamage(character: Character, damage: number): number;
 }
 //# sourceMappingURL=Service.d.ts.map

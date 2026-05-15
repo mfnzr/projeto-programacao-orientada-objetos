@@ -1,6 +1,7 @@
 import { CharacterClass } from "../enums/CharacterClass";
+import { IBattle } from "../Interfaces/IBattle";
 
-export abstract class Character {
+export abstract class Character implements IBattle {
   public _name!: string; //get set
   public _level: number;
   public _health: number;
@@ -54,10 +55,7 @@ export abstract class Character {
   //aqui é onde vou utilizar o polimorfismo, ou seja, utilizar o mesmo método para diferentes tipos de personagens, cada um com sua própria implementação
   public abstract attack(): number;
 
-  //assinaturas da sobrecarga
-  takeDamage(damage: number): number;
-  takeDamage(damage: number, multiplier: number): number;
-
+  //implementação da sobrecarga
   takeDamage(damage: number, multiplier: number = 1): number {
     const total = damage * multiplier;
     this.health -= total;

@@ -2,6 +2,7 @@ import { Character } from "../models/Character";
 import { Warrior } from "../models/Warrior";
 import { Archer } from "../models/Archer";
 import { Mage } from "../models/Mage";
+import { IBattle } from "../Interfaces/IBattle";
 
 
 //REGRAS DE NEGOCIO - CRIA OS PERSONAGENS E REALIZA AÇÕES COMO ATAQUE E TOMAR DANO
@@ -35,7 +36,7 @@ export class CharacterService {
     character.attack();
   }
 
-  attackCharacter(attacker: Character, defender: Character, critical: boolean): number {
+  attackCharacter(attacker: IBattle, defender: IBattle, critical: boolean = false): number {
     const damage = attacker.attack();        // pega o dano do atacante
     const multiplier = critical ? 2 : 1      // dano critico dobra o dano
     defender.takeDamage(damage, multiplier); // aplica no defensor, usando a sobrecarga com o multiplicador

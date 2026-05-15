@@ -9,4 +9,5 @@ const view = new CharacterView_1.CharacterView();
 view.setController(controller);
 controller.setView(view);
 controller.startCreation(); // controller coordena tudo
+controller.startBattle();
 //# sourceMappingURL=index.js.map
