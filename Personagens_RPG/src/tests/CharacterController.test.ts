@@ -20,7 +20,7 @@ describe("CharacterController", () => {
     controller.createAndShowCharacter("Legolas", CharacterClass.ARCHER);
     const archer = service.Characters()[0];
     expect(archer).toBeDefined();
-    expect(archer!.attack()).toBe(13); // 10 + 1 * 3
+    expect(archer!.attack()).toBe(13);
   });
 
   it("deve realizar ataque entre dois personagens", () => {

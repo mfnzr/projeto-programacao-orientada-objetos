@@ -3,16 +3,11 @@ import { Warrior } from "../models/Warrior";
 import { Archer } from "../models/Archer";
 import { Mage } from "../models/Mage";
 import { IBattle } from "../Interfaces/IBattle";
-
-
-//REGRAS DE NEGOCIO - CRIA OS PERSONAGENS E REALIZA AÇÕES COMO ATAQUE E TOMAR DANO
-
 export class CharacterService {
- private characters: Character[] = []; //armazena os personagens criados
-
+ private characters: Character[] = [];
   createWarrior(name: string): Warrior {
     const warrior = new Warrior(name);
-    this.characters.push(warrior); //salva automaticamente na lista
+    this.characters.push(warrior); 
     return warrior;
   }
 
@@ -37,10 +32,10 @@ export class CharacterService {
   }
 
   attackCharacter(attacker: IBattle, defender: IBattle, critical: boolean = false): number {
-    const damage = attacker.attack();        // pega o dano do atacante
-    const multiplier = critical ? 2 : 1      // dano critico dobra o dano
-    defender.takeDamage(damage, multiplier); // aplica no defensor, usando a sobrecarga com o multiplicador
-    return damage * multiplier;              // retorna pra view exibir
+    const damage = attacker.attack(); 
+    const multiplier = critical ? 2 : 1 
+    defender.takeDamage(damage, multiplier); 
+    return damage * multiplier;            
   }
 
   takeDamage(character: Character, damage: number): number {

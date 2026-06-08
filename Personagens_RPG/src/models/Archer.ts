@@ -7,8 +7,6 @@ export class Archer extends Character {
     super(name, CharacterClass.ARCHER);
   }
 
-  //aqui estou sobrescrevendo o método attack da classe Character, ou seja,
-  //estou implementando a lógica específica para o ataque do Arqueiro
   attack(): number {
     return 10 + this.level * 3
   }

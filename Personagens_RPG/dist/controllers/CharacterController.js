@@ -64,22 +64,26 @@ class CharacterController {
         return { attacker, defender, damage };
     }
     startBattle() {
-        try {
-            const characters = this.service.Characters();
-            const { attackerIndex, defenderIndex, critical } = this.view.askBattle(characters);
-            if (attackerIndex === defenderIndex) {
-                console.log("Um personagem não pode atacar a si mesmo!");
-                return;
+        const entities = this.service.Characters();
+        let validChoice = false;
+        while (!validChoice) {
+            try {
+                const { attackerIndex, defenderIndex, critical } = this.view.askBattle(entities);
+                if (attackerIndex === defenderIndex) {
+                    console.log("Uma entidade não pode atacar a si mesma!");
+                    continue;
+                }
+                const { attacker, defender, damage } = this.attack(attackerIndex, defenderIndex, critical);
+                this.view.showAttackResult(attacker, defender, damage, critical);
+                validChoice = true;
             }
-            const { attacker, defender, damage } = this.attack(attackerIndex, defenderIndex, critical);
-            this.view.showAttackResult(attacker, defender, damage, critical);
-        }
-        catch (error) {
-            if (error instanceof Exceptions_1.CharacterNotFoundException) {
-                console.log(`Erro: ${error.message}`);
-            }
-            else {
-                throw error;
+            catch (error) {
+                if (error instanceof Exceptions_1.CharacterNotFoundException) {
+                    console.log(`Erro: ${error.message} Tente novamente.\n`);
+                }
+                else {
+                    throw error;
+                }
             }
         }
     }

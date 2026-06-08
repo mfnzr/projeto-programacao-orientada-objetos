@@ -22,7 +22,7 @@ export abstract class Character implements IBattle {
     if (value.trim() !== "") {
       this._name = value;
     } else {
-      throw new Error("Name cannot be empty");
+      throw new Error("Nome não deve ser vazio");
     }
   }
 
@@ -34,7 +34,7 @@ export abstract class Character implements IBattle {
     if (value > 0) {
       this._level = value;
     } else {
-      throw new Error("Level must be greater than 0");
+      throw new Error("Level deve ser maior que 0");
     }
   }
 
@@ -43,7 +43,7 @@ export abstract class Character implements IBattle {
   }
 
   set health(value: number) {
-    if (value < 0) this._health = 0; // não deixa vida negativa
+    if (value < 0) this._health = 0;
     else this._health = value;
   }
 
@@ -51,11 +51,8 @@ export abstract class Character implements IBattle {
     return this._class;
   }
 
-  //metodo abstrato, ou seja, sem implementação, apenas a assinatura
-  //aqui é onde vou utilizar o polimorfismo, ou seja, utilizar o mesmo método para diferentes tipos de personagens, cada um com sua própria implementação
   public abstract attack(): number;
 
-  //implementação da sobrecarga
   takeDamage(damage: number, multiplier: number = 1): number {
     const total = damage * multiplier;
     this.health -= total;

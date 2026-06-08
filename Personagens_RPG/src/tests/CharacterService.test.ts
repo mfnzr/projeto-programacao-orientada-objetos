@@ -3,7 +3,6 @@ import { CharacterService } from "../controllers/Service";
 describe("CharacterService", () => {
   let service: CharacterService;
 
-  //roda antes de cada teste
   beforeEach(() => {
     service = new CharacterService();
   });

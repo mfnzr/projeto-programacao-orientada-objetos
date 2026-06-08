@@ -5,7 +5,6 @@ import { Character } from "../models/Character";
 import { CharacterNotFoundException, EmptyNameException, InvalidOptionException } from "../exceptions/Exceptions";
 import { IBattle } from "../Interfaces/IBattle";
 
-//INTERAÇÕES COM O USUÁRIO - COLETA DADOS E EXIBE INFORMAÇÕES
 
 export class CharacterView {
   private prompt = promptSync();
