@@ -1,4 +1,5 @@
 import { CharacterClass } from "../enums/CharacterClass";
+import { CharacterNotFoundException, EmptyNameException, InvalidOptionException } from "../exceptions/Exceptions";
 import { Character } from "../models/Character";
 import { CharacterView } from "../views/CharacterView";
 import { CharacterService } from "./Service";
@@ -24,17 +25,27 @@ export class CharacterController {
     let count = 1;
 
     while (creating) {
-      const { name, characterClass } = this.view.askCharacterData(count);
-      this.createAndShowCharacter(name, characterClass);
-      count++;
+      try {
+        const { name, characterClass } = this.view.askCharacterData(count);
+        this.createAndShowCharacter(name, characterClass);
+        count++;
 
-      if (count > 2) { // mínimo 2 personagens antes de perguntar
-        const continuar = this.view.askContinue();
-        if (!continuar) creating = false;
+        if (count > 2) {
+          const continuar = this.view.askContinue();
+          if (!continuar) creating = false;
+        }
+      } catch (error) {
+        if (error instanceof InvalidOptionException) {
+          console.log(`Erro: ${error.message}`);
+        } else if (error instanceof EmptyNameException) {
+          console.log(`Erro: ${error.message}`);
+        } else {
+          throw error;
+        }
       }
     }
 
-    const all = this.service.getAllCharacters();
+    const all = this.service.Characters();
     this.view.showAllCharacters(all);
   }
 
@@ -54,28 +65,40 @@ export class CharacterController {
   }
 
   attack(attackerIndex: number, defenderIndex: number, critical: boolean): { attacker: Character, defender: Character, damage: number } {
-    const characters = this.service.getAllCharacters();
+    const characters = this.service.Characters();
     const attacker = characters[attackerIndex];
     const defender = characters[defenderIndex];
 
-    if (!attacker || !defender) {
-      throw new Error("Personagem não encontrado!");
-    }
+    if (!attacker || !defender) throw new CharacterNotFoundException();
 
     const damage = this.service.attackCharacter(attacker, defender, critical);
     return { attacker, defender, damage };
   }
 
   startBattle(): void {
-    const characters = this.service.getAllCharacters();
-    const { attackerIndex, defenderIndex, critical } = this.view.askBattle(characters);
+    const entities = this.service.Characters();
+    let validChoice = false;
 
-    if (attackerIndex === defenderIndex) {
-      console.log("Um personagem não pode atacar a si mesmo!");
-      return;
+    while (!validChoice) {
+      try {
+        const { attackerIndex, defenderIndex, critical } = this.view.askBattle(entities);
+
+        if (attackerIndex === defenderIndex) {
+          console.log("Uma entidade não pode atacar a si mesma!");
+          continue;
+        }
+
+        const { attacker, defender, damage } = this.attack(attackerIndex, defenderIndex, critical);
+        this.view.showAttackResult(attacker, defender, damage, critical);
+        validChoice = true;
+
+      } catch (error) {
+        if (error instanceof CharacterNotFoundException) {
+          console.log(`Erro: ${error.message} Tente novamente.\n`);
+        } else {
+          throw error;
+        }
+      }
     }
-
-    const { attacker, defender, damage } = this.attack(attackerIndex, defenderIndex, critical);
-    this.view.showAttackResult(attacker, defender, damage, critical);
   }
 }

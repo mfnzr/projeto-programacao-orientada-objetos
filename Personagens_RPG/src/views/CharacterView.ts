@@ -2,6 +2,8 @@ import promptSync from "prompt-sync";
 import { CharacterController } from "../controllers/CharacterController";
 import { CharacterClass } from "../enums/CharacterClass";
 import { Character } from "../models/Character";
+import { CharacterNotFoundException, EmptyNameException, InvalidOptionException } from "../exceptions/Exceptions";
+import { IBattle } from "../Interfaces/IBattle";
 
 //INTERAÇÕES COM O USUÁRIO - COLETA DADOS E EXIBE INFORMAÇÕES
 
@@ -26,10 +28,10 @@ export class CharacterView {
     const classChoice = this.prompt("Classe: ");
     const characterClass = classMap[classChoice];
 
-    if (!characterClass) throw new Error("Opção inválida!");
+    if (!characterClass) throw new InvalidOptionException();
 
     const name = this.prompt("Nome: ");
-    if (!name || name.trim() === "") throw new Error("Nome não pode ser vazio!");
+    if (!name || name.trim() === "") throw new EmptyNameException();
 
     return { name, characterClass }; //retorna os dados
   }
@@ -56,16 +58,20 @@ export class CharacterView {
     `);
   }
 
-  askBattle(characters: Character[]): { attackerIndex: number, defenderIndex: number, critical: boolean } {
+  askBattle(entities: IBattle[]): { attackerIndex: number, defenderIndex: number, critical: boolean } {
     console.log("\n=== Batalha! ===\n");
 
     console.log("Escolha o atacante:");
-    characters.forEach((c, i) => console.log(`${i + 1} - ${c.name} (${c.class})`));
+    entities.forEach((e, i) => console.log(`${i + 1} - ${e.name}`));
     const attackerIndex = parseInt(this.prompt("Atacante: ")) - 1;
 
+    if (!entities[attackerIndex]) throw new CharacterNotFoundException();
+
     console.log("\nEscolha o defensor:");
-    characters.forEach((c, i) => console.log(`${i + 1} - ${c.name} (${c.class})`));
+    entities.forEach((e, i) => console.log(`${i + 1} - ${e.name}`));
     const defenderIndex = parseInt(this.prompt("Defensor: ")) - 1;
+
+    if (!entities[defenderIndex]) throw new CharacterNotFoundException();
 
     const criticalAnswer = this.prompt("Ataque crítico? (s/n): ");
     const critical = criticalAnswer.toLowerCase() === "s";

@@ -1,5 +1,6 @@
 import { CharacterClass } from "../enums/CharacterClass";
-export declare abstract class Character {
+import { IBattle } from "../Interfaces/IBattle";
+export declare abstract class Character implements IBattle {
     _name: string;
     _level: number;
     _health: number;
@@ -13,7 +14,6 @@ export declare abstract class Character {
     set health(value: number);
     get class(): CharacterClass;
     abstract attack(): number;
-    takeDamage(damage: number): number;
-    takeDamage(damage: number, multiplier: number): number;
+    takeDamage(damage: number, multiplier?: number): number;
 }
 //# sourceMappingURL=Character.d.ts.map

@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CharacterView = void 0;
 const prompt_sync_1 = __importDefault(require("prompt-sync"));
 const CharacterClass_1 = require("../enums/CharacterClass");
+const Exceptions_1 = require("../exceptions/Exceptions");
 //INTERAÇÕES COM O USUÁRIO - COLETA DADOS E EXIBE INFORMAÇÕES
 class CharacterView {
     constructor() {
@@ -25,10 +26,10 @@ class CharacterView {
         const classChoice = this.prompt("Classe: ");
         const characterClass = classMap[classChoice];
         if (!characterClass)
-            throw new Error("Opção inválida!");
+            throw new Exceptions_1.InvalidOptionException();
         const name = this.prompt("Nome: ");
         if (!name || name.trim() === "")
-            throw new Error("Nome não pode ser vazio!");
+            throw new Exceptions_1.EmptyNameException();
         return { name, characterClass }; //retorna os dados
     }
     askContinue() {
@@ -50,14 +51,18 @@ class CharacterView {
       Saúde:  ${character.health}
     `);
     }
-    askBattle(characters) {
+    askBattle(entities) {
         console.log("\n=== Batalha! ===\n");
         console.log("Escolha o atacante:");
-        characters.forEach((c, i) => console.log(`${i + 1} - ${c.name} (${c.class})`));
+        entities.forEach((e, i) => console.log(`${i + 1} - ${e.name}`));
         const attackerIndex = parseInt(this.prompt("Atacante: ")) - 1;
+        if (!entities[attackerIndex])
+            throw new Exceptions_1.CharacterNotFoundException();
         console.log("\nEscolha o defensor:");
-        characters.forEach((c, i) => console.log(`${i + 1} - ${c.name} (${c.class})`));
+        entities.forEach((e, i) => console.log(`${i + 1} - ${e.name}`));
         const defenderIndex = parseInt(this.prompt("Defensor: ")) - 1;
+        if (!entities[defenderIndex])
+            throw new Exceptions_1.CharacterNotFoundException();
         const criticalAnswer = this.prompt("Ataque crítico? (s/n): ");
         const critical = criticalAnswer.toLowerCase() === "s";
         return { attackerIndex, defenderIndex, critical };

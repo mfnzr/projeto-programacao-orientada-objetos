@@ -28,7 +28,7 @@ export class CharacterService {
     return mage;
   }
 
-  getAllCharacters(): Character[] {
+  Characters(): Character[] {
     return this.characters;
   }
 

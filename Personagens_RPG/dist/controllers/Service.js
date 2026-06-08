@@ -24,13 +24,13 @@ class CharacterService {
         this.characters.push(mage);
         return mage;
     }
-    getAllCharacters() {
+    Characters() {
         return this.characters;
     }
     attack(character) {
         character.attack();
     }
-    attackCharacter(attacker, defender, critical) {
+    attackCharacter(attacker, defender, critical = false) {
         const damage = attacker.attack(); // pega o dano do atacante
         const multiplier = critical ? 2 : 1; // dano critico dobra o dano
         defender.takeDamage(damage, multiplier); // aplica no defensor, usando a sobrecarga com o multiplicador

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CharacterController = void 0;
 const CharacterClass_1 = require("../enums/CharacterClass");
+const Exceptions_1 = require("../exceptions/Exceptions");
 //COORDENA O FLUXO ENTRE A VIEW E O SERVICE
 class CharacterController {
     //injeção de dependência - o service é injetado no controller, permitindo maior flexibilidade
@@ -15,16 +16,29 @@ class CharacterController {
         let creating = true;
         let count = 1;
         while (creating) {
-            const { name, characterClass } = this.view.askCharacterData(count);
-            this.createAndShowCharacter(name, characterClass);
-            count++;
-            if (count > 2) { // mínimo 2 personagens antes de perguntar
-                const continuar = this.view.askContinue();
-                if (!continuar)
-                    creating = false;
+            try {
+                const { name, characterClass } = this.view.askCharacterData(count);
+                this.createAndShowCharacter(name, characterClass);
+                count++;
+                if (count > 2) {
+                    const continuar = this.view.askContinue();
+                    if (!continuar)
+                        creating = false;
+                }
+            }
+            catch (error) {
+                if (error instanceof Exceptions_1.InvalidOptionException) {
+                    console.log(`Erro: ${error.message}`);
+                }
+                else if (error instanceof Exceptions_1.EmptyNameException) {
+                    console.log(`Erro: ${error.message}`);
+                }
+                else {
+                    throw error;
+                }
             }
         }
-        const all = this.service.getAllCharacters();
+        const all = this.service.Characters();
         this.view.showAllCharacters(all);
     }
     //importa o método createAndShowCharacter para criar um personagem com base na classe escolhida e mostrar suas informações
@@ -41,24 +55,33 @@ class CharacterController {
         }
     }
     attack(attackerIndex, defenderIndex, critical) {
-        const characters = this.service.getAllCharacters();
+        const characters = this.service.Characters();
         const attacker = characters[attackerIndex];
         const defender = characters[defenderIndex];
-        if (!attacker || !defender) {
-            throw new Error("Personagem não encontrado!");
-        }
+        if (!attacker || !defender)
+            throw new Exceptions_1.CharacterNotFoundException();
         const damage = this.service.attackCharacter(attacker, defender, critical);
         return { attacker, defender, damage };
     }
     startBattle() {
-        const characters = this.service.getAllCharacters();
-        const { attackerIndex, defenderIndex, critical } = this.view.askBattle(characters);
-        if (attackerIndex === defenderIndex) {
-            console.log("Um personagem não pode atacar a si mesmo!");
-            return;
+        try {
+            const characters = this.service.Characters();
+            const { attackerIndex, defenderIndex, critical } = this.view.askBattle(characters);
+            if (attackerIndex === defenderIndex) {
+                console.log("Um personagem não pode atacar a si mesmo!");
+                return;
+            }
+            const { attacker, defender, damage } = this.attack(attackerIndex, defenderIndex, critical);
+            this.view.showAttackResult(attacker, defender, damage, critical);
         }
-        const { attacker, defender, damage } = this.attack(attackerIndex, defenderIndex, critical);
-        this.view.showAttackResult(attacker, defender, damage, critical);
+        catch (error) {
+            if (error instanceof Exceptions_1.CharacterNotFoundException) {
+                console.log(`Erro: ${error.message}`);
+            }
+            else {
+                throw error;
+            }
+        }
     }
 }
 exports.CharacterController = CharacterController;

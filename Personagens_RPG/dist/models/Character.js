@@ -42,6 +42,7 @@ class Character {
     get class() {
         return this._class;
     }
+    //implementação da sobrecarga
     takeDamage(damage, multiplier = 1) {
         const total = damage * multiplier;
         this.health -= total;

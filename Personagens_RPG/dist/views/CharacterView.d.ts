@@ -1,6 +1,7 @@
 import { CharacterController } from "../controllers/CharacterController";
 import { CharacterClass } from "../enums/CharacterClass";
 import { Character } from "../models/Character";
+import { IBattle } from "../Interfaces/IBattle";
 export declare class CharacterView {
     private prompt;
     private controller;
@@ -12,7 +13,7 @@ export declare class CharacterView {
     askContinue(): boolean;
     showAllCharacters(characters: Character[]): void;
     showCharacterInfo(character: Character): void;
-    askBattle(characters: Character[]): {
+    askBattle(entities: IBattle[]): {
         attackerIndex: number;
         defenderIndex: number;
         critical: boolean;
